@@ -8,6 +8,9 @@ import os
 import platform
 import subprocess
 
+app = Flask(__name__)
+app.config['SECRET_KEY']='super_secret_key'
+
 #setting and configuring path for pdfkit to work
 config = pdfkit.configuration(wkhtmltopdf='./bin/wkhtmltopdf')
 # def _get_pdfkit_config():
@@ -16,9 +19,6 @@ config = pdfkit.configuration(wkhtmltopdf='./bin/wkhtmltopdf')
 #      else:
 #          WKHTMLTOPDF_CMD = subprocess.Popen(['which', os.environ.get('WKHTMLTOPDF_BINARY', 'wkhtmltopdf')], stdout=subprocess.PIPE).communicate()[0].strip()
 #          return pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_CMD)
-
-app = Flask(__name__)
-app.config['SECRET_KEY']='super_secret_key'
  
 @app.route("/")
 def default():
