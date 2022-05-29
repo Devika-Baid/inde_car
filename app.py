@@ -11,8 +11,7 @@ import subprocess
 app = Flask(__name__)
 app.config['SECRET_KEY']='super_secret_key'
 
-#setting and configuring path for pdfkit to work
-config = pdfkit.configuration(wkhtmltopdf='./bin/wkhtmltopdf')
+
 # def _get_pdfkit_config():
 #      if platform.system() == 'Windows':
 #          return pdfkit.configuration(wkhtmltopdf=os.environ.get('WKHTMLTOPDF_BINARY', 'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'))
@@ -228,6 +227,8 @@ def recommended_result_pdf(index):
 
     #rendering html as pdf
     rendered = render_template('recommendation_pdf.html',recs=recs,choices=choices)
+    #setting and configuring path for pdfkit to work
+    config = pdfkit.configuration(wkhtmltopdf='./opt/bin/wkhtmltopdf')
     pdf = pdfkit.from_string(rendered,False,configuration=config)
     response = make_response(pdf)
     response.headers['Content-Type']='application/pdf'
