@@ -5,6 +5,7 @@ import numpy as np
 import pickle 
 import pdfkit
 import os
+import sys
 import platform
 import subprocess
 
@@ -228,8 +229,15 @@ def recommended_result_pdf(index):
     #rendering html as pdf
     rendered = render_template('recommendation_pdf.html',recs=recs,choices=choices)
     #setting and configuring path for pdfkit to work
-    config = pdfkit.configuration(wkhtmltopdf='./opt/bin/wkhtmltopdf')
-    pdf = pdfkit.from_string(rendered,False,configuration=config)
+#     config = pdfkit.configuration(wkhtmltopdf='./opt/bin/wkhtmltopdf')
+#     pdf = pdfkit.from_string(rendered,False,configuration=config)
+    if platform.system() == "Windows":
+        pdfkit_config = pdfkit.configuration(wkhtmltopdf=os.environ.get('WKHTMLTOPDF_BINARY', 'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'))
+    else:
+        os.environ['PATH'] += os.pathsep + os.path.dirname(sys.executable) 
+        WKHTMLTOPDF_CMD = subprocess.Popen(['which', os.environ.get('WKHTMLTOPDF_BINARY', 'wkhtmltopdf')],stdout=subprocess.PIPE).communicate()[0].strip()
+        pdfkit_config = pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_CMD)
+    pdf = pdfkit.from_string(rendered,False,configuration=pdfkit_config)
     response = make_response(pdf)
     response.headers['Content-Type']='application/pdf'
     response.headers['Content-Disposition']='attachment;filename-recommendation.pdf'
