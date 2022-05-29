@@ -9,12 +9,12 @@ import platform
 import subprocess
 
 #setting and configuring path for pdfkit to work
-def _get_pdfkit_config():
-     if platform.system() == 'Windows':
-         return pdfkit.configuration(wkhtmltopdf=os.environ.get('WKHTMLTOPDF_BINARY', 'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'))
-     else:
-         WKHTMLTOPDF_CMD = subprocess.Popen(['which', os.environ.get('WKHTMLTOPDF_BINARY', 'wkhtmltopdf')], stdout=subprocess.PIPE).communicate()[0].strip()
-         return pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_CMD)
+# def _get_pdfkit_config():
+#      if platform.system() == 'Windows':
+#          return pdfkit.configuration(wkhtmltopdf=os.environ.get('WKHTMLTOPDF_BINARY', 'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'))
+#      else:
+#          WKHTMLTOPDF_CMD = subprocess.Popen(['which', os.environ.get('WKHTMLTOPDF_BINARY', 'wkhtmltopdf')], stdout=subprocess.PIPE).communicate()[0].strip()
+#          return pdfkit.configuration(wkhtmltopdf=WKHTMLTOPDF_CMD)
 
 app = Flask(__name__)
 app.config['SECRET_KEY']='super_secret_key'
@@ -215,23 +215,23 @@ def recommended_result():
     no_of_recs=session['no_of_recs']
     return render_template('recommended_result.html',recs=recs,count=list(range(0,no_of_recs)))
 
-@app.route("/recommended_result_pdf/<index>")
-def recommended_result_pdf(index):
-    recs=session['recs']
-    index=int(index)
-    if(index!=-1):
-        # particular recommendation is downloaded
-        recs=recs[index]
-        recs=[recs]
-    choices=session['choices']
+# @app.route("/recommended_result_pdf/<index>")
+# def recommended_result_pdf(index):
+#     recs=session['recs']
+#     index=int(index)
+#     if(index!=-1):
+#         # particular recommendation is downloaded
+#         recs=recs[index]
+#         recs=[recs]
+#     choices=session['choices']
 
-    #rendering html as pdf
-    rendered = render_template('recommendation_pdf.html',recs=recs,choices=choices)
-    pdf = pdfkit.from_string(rendered,False,configuration=_get_pdfkit_config())
-    response = make_response(pdf)
-    response.headers['Content-Type']='application/pdf'
-    response.headers['Content-Disposition']='attachment;filename-recommendation.pdf'
-    return response
+#     #rendering html as pdf
+#     rendered = render_template('recommendation_pdf.html',recs=recs,choices=choices)
+#     pdf = pdfkit.from_string(rendered,False,configuration=_get_pdfkit_config())
+#     response = make_response(pdf)
+#     response.headers['Content-Type']='application/pdf'
+#     response.headers['Content-Disposition']='attachment;filename-recommendation.pdf'
+#     return response
 
 @app.route("/predict", methods=['GET','POST'])
 def predict():
