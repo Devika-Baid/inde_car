@@ -3,12 +3,45 @@ from flask import Flask, render_template, request, url_for, make_response, sessi
 import pandas as pd
 import numpy as np
 import pickle 
-import pdfkit
-import os
-import platform
-import subprocess
 
-#setting and configuring path for pdfkit to work
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy import stats
+
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import cross_val_score
+from sklearn import metrics
+from sklearn.pipeline import Pipeline
+from sklearn.model_selection import GridSearchCV
+from sklearn.linear_model import Ridge
+import matplotlib.pyplot as plt
+
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+from pywaffle import Waffle
+import random
+
+#to plot in jupyter
+pd.options.mode.chained_assignment=None
+import seaborn as sns
+from scipy import stats
+
+# import pdfkit
+# import os
+# import platform
+# import subprocess
+
+# #setting and configuring path for pdfkit to work
 # def _get_pdfkit_config():
 #      if platform.system() == 'Windows':
 #          return pdfkit.configuration(wkhtmltopdf=os.environ.get('WKHTMLTOPDF_BINARY', 'C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe'))
@@ -225,13 +258,13 @@ def recommended_result():
 #         recs=[recs]
 #     choices=session['choices']
 
-#     #rendering html as pdf
-#     rendered = render_template('recommendation_pdf.html',recs=recs,choices=choices)
-#     pdf = pdfkit.from_string(rendered,False,configuration=_get_pdfkit_config())
-#     response = make_response(pdf)
-#     response.headers['Content-Type']='application/pdf'
-#     response.headers['Content-Disposition']='attachment;filename-recommendation.pdf'
-#     return response
+    # #rendering html as pdf
+    # rendered = render_template('recommendation_pdf.html',recs=recs,choices=choices)
+    # pdf = pdfkit.from_string(rendered,False,configuration=_get_pdfkit_config())
+    # response = make_response(pdf)
+    # response.headers['Content-Type']='application/pdf'
+    # response.headers['Content-Disposition']='attachment;filename-recommendation.pdf'
+    # return response
 
 @app.route("/predict", methods=['GET','POST'])
 def predict():
@@ -297,6 +330,6 @@ def predict():
     return render_template('predict.html',ranges=df,f_list=float_cols,b_list=bool_cols)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
 
 
