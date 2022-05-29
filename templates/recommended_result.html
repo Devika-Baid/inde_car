@@ -9,7 +9,7 @@
       {% for i in recs %}
       <div class="slide">
          <h2>{{i['Make']}} {{i['Model']}} {{i['Variant']}}: Rs.{{i['Ex-Showroom_Price(Rs)']}}</h2>
-         <a class="clickme" href="{{url_for('recommended_result_pdf',index=loop.index)}}">Download recommendation</a>
+<!--          <a class="clickme" href="{{url_for('recommended_result_pdf',index=loop.index)}}">Download recommendation</a> -->
          <br>
          <br>
          <div class="slidetable">
@@ -34,7 +34,7 @@
       {% endfor %}
    </div>
    <br>
-   <a class="clickme" href="{{url_for('recommended_result_pdf',index=-1)}}"> Download all recommendations</a>
+<!--    <a class="clickme" href="{{url_for('recommended_result_pdf',index=-1)}}"> Download all recommendations</a> -->
 </body>
 <script src="{{ url_for('static', filename='js/recommended_result.js') }}"></script>
 {% include "footer.html" %}
